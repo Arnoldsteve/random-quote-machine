@@ -35,6 +35,18 @@ function App() {
 
   const selectedQuote = quotes[selectedQuoteIndex];
 
+  const shareOnTwitter = () => {
+    const tweetText = encodeURIComponent(`"${selectedQuote.quote}" - ${selectedQuote.author}`);
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
+    window.open(twitterUrl, '_blank');
+  };
+
+  const shareOnTumblr = () => {
+    const tumblrText = encodeURIComponent(`"${selectedQuote.quote}" - ${selectedQuote.author}`);
+    const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?posttype=quote&tags=quotes&caption=${encodeURIComponent(selectedQuote.author)}&content=${tumblrText}&canonicalUrl=https://www.tumblr.com`;
+    window.open(tumblrUrl, '_blank');
+  };
+
   return (
     <Box
       sx={{
@@ -74,18 +86,10 @@ function App() {
         )}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box>
-            <a 
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`"${selectedQuote?.quote}" - ${selectedQuote?.author}`)}`}
-              id="tweet-quote" 
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: color, textDecoration: 'none' }}
-            >
-              <IconButton size="small" sx={{ color: color }}>
-                <TwitterIcon />
-              </IconButton>
-            </a>
-            <IconButton size="small" sx={{ color: color }}>
+            <IconButton size="small" sx={{ color: color }} onClick={shareOnTwitter}>
+              <TwitterIcon />
+            </IconButton>
+            <IconButton size="small" sx={{ color: color }} onClick={shareOnTumblr}>
               <TumblrIcon />
             </IconButton>
           </Box>
