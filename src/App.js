@@ -4,9 +4,6 @@ import {
   Button, 
   Typography, 
   Box, 
-  Card, 
-  CardContent, 
-  CardActions,
   IconButton
 } from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -38,44 +35,50 @@ function App() {
 
   const selectedQuote = quotes[selectedQuoteIndex];
 
-  const tweetQuote = () => {
-    const tweetText = encodeURIComponent(`"${selectedQuote.quote}" - ${selectedQuote.author}`);
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
-    window.open(twitterUrl, '_blank');
-  };
-
   return (
     <Box
-      id="quote-box"
       sx={{
         display: 'flex',
-        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         minHeight: '100vh',
+        width: '100%',
         backgroundColor: color,
         transition: 'background-color 0.5s ease',
       }}
     >
-      <Card sx={{ maxWidth: 500, width: '100%', m: 2, backgroundColor: 'white' }}>
-        <CardContent>
-          {selectedQuote && (
-            <Box sx={{ my: 2 }}>
-              <Typography id="text" variant="h6" component="div" sx={{ color: color }} gutterBottom>
-                "{selectedQuote.quote}"
-              </Typography>
-              <Typography id="author" variant="subtitle2" sx={{ color: color }} align="right">
-                - {selectedQuote.author}
-              </Typography>
-            </Box>
-          )}
-        </CardContent>
-        <CardActions sx={{ justifyContent: 'space-between', px: 2, pb: 2 }}>
+      <Box
+        id="quote-box"
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          maxWidth: 500,
+          width: '90%',
+          padding: 3,
+          backgroundColor: 'white',
+          borderRadius: 2,
+          boxShadow: 3,
+        }}
+      >
+        {selectedQuote && (
+          <>
+            <Typography id="text" variant="h6" component="div" sx={{ color: color, mb: 2 }}>
+              "{selectedQuote.quote}"
+            </Typography>
+            <Typography id="author" variant="subtitle2" sx={{ color: color, textAlign: 'right', mb: 3 }}>
+              - {selectedQuote.author}
+            </Typography>
+          </>
+        )}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box>
             <a 
-              href="#" 
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`"${selectedQuote?.quote}" - ${selectedQuote?.author}`)}`}
               id="tweet-quote" 
-              onClick={tweetQuote}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{ color: color, textDecoration: 'none' }}
             >
               <IconButton size="small" sx={{ color: color }}>
@@ -100,9 +103,9 @@ function App() {
           >
             New quote
           </Button>
-        </CardActions>
-      </Card>
-      <Box sx={{ textAlign: 'center', mt: 2 }}>
+        </Box>
+      </Box>
+      <Box sx={{ position: 'absolute', bottom: 10, textAlign: 'center' }}>
         <Typography variant="caption" color="white">
           ~ dedicated to Syprose by Arnold © {new Date().getFullYear()} All Rights Reserved.
         </Typography>
